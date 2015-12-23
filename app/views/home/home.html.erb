@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="panel panel-info">
+    <% @categories.each do |category| %>
+    <div class="panel-heading col-md-12">
+      <table width="100%">
+        <tr>
+          <td class="col-md-6"><a href="<%= category_path(category.id) %>"><%= category.name %></a></td>
+          <td class="col-md-2">Threads/Posts</td>
+          <td class="col-md-4">Last posts</td>
+        </tr>
+      </table>
+    </div>
+    <% category.tops.each do |topic| %>
+    <% if topic %>
+    <table class="table" width="100%">
+      <tr>
+        <td class="col-md-6">
+          <p><a href="<%= topic_path(topic.id) %>"><%= topic.name %></a> <small>(<%= topic.get_views %> Viewing)</small></p>
+
+          <p><small><%= topic.description %></small></p>
+
+            <p>Sub-Forums:</p>
+            <% topic.topics.each do |t| %>
+            <small><a href="<%= topic_path(t.id) %>"><%= t.name %></a></small><BR>
+          <% end %>
+        </td>
+        <td class="col-md-2">
+          <p>
+            Threads: <%= topic.all_posts.count %>
+          </p>
+          <p>
+            Posts: <%= topic.get_comments.count %>
+          </p>
+        </td>
+        <td class="col-md-4">
+          <% if topic.last_post %>
+          <p><a href="<%= post_path(topic.last_post.id) %>"><%= truncate(topic.last_post.name, :length => 30) %></a> Go to last post by <a href="<%= user_path(topic.last_post.user.id) %>"><%= topic.last_post.user.name %></a></p>
+          <%= topic.last_post.updated_at %>
+          <% else %>
+          -
+          <% end %>
+        </td>
+      </tr>
+    </table>
+    <% end %>
+    <% end %>
+    <% end %>
+  </div>
+</div>

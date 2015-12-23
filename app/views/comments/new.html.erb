@@ -1,0 +1,35 @@
+<% if @comment.errors.any? %>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissable">
+          <ul>
+            <% @comment.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    </div>
+</div>
+<% end %>
+
+<%= form_for @comment, url: post_comments_path(@post_id) do |f| %>
+<div class="row">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      New replie
+    </div>
+      <div class="panel-body">
+        <p>
+          Text: 
+        </p>
+        <p>
+          <%= f.text_area :content %>
+        </p>
+        <div class="actions">
+          <input type="submit" class="btn btn-success" value="Salvar">
+        </div>
+      </div>
+
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,49 @@
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="<%= root_url %>">Home</a></li>
+    <li><a href="<%= category_path(@post.topic.category.id) %>"><%= @post.topic.category.name %></a></li>
+    <% if @post.topic.get_topic == nil %>
+      <li><a href="<%= topic_path(@post.topic.id) %>"><%= @post.topic.name %></a></li>
+    <% else %>
+      <li><a href="<%= topic_path(@post.topic.get_topic.id) %>"><%= @post.topic.get_topic.name %></a></li>
+      <li><a href="<%= post_path(@post.topic.id) %>"><%= @post.topic.name %></a></li>
+    <% end %>
+    <li><a href="<%= post_path(@post.id) %>" class="active"><%= @post.name %></a></li>
+  </ol>
+</div>
+
+<% if @post.errors.any? %>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissable">
+          <ul>
+            <% @post.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    </div>
+</div>
+<% end %>
+
+<%= form_for @post do |f| %>
+<div class="row">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      Edit
+    </div>
+      <div class="panel-body">
+        <p>
+          Title: <%= f.text_field :name %>
+        </p>
+        <p>
+          Featured: <%= f.check_box :featured %>
+        </p>
+        <div class="actions">
+          <input type="submit" class="btn btn-success" value="Salvar">
+        </div>
+      </div>
+
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,52 @@
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="<%= root_url %>">Home</a></li>
+    <li><a href="<%= category_path(@post.topic.category.id) %>"><%= @post.topic.category.name %></a></li>
+    <% if @post.topic.get_topic == nil %>
+      <li><a href="<%= topic_path(@post.topic.id) %>"><%= @post.topic.name %></a></li>
+    <% else %>
+      <li><a href="<%= topic_path(@post.topic.get_topic.id) %>"><%= @post.topic.get_topic.name %></a></li>
+      <li><a href="<%= topic_path(@post.topic.id) %>"><%= @post.topic.name %></a></li>
+    <% end %>
+    <li><a href="<%= post_path(@post.id) %>" class="active"><%= @post.name %></a></li>
+  </ol>
+</div>
+
+<div class="row">
+  <div class="panel panel-info">
+    <div class="panel-heading col-md-12">
+      <h5 style="float:left"><%= @post.name %> - views <%= @post.views %></h5>
+      <% if permission? or @post.user == current_user and !current_user.block %>
+        <span style="float:right">
+        <%= link_to 'Edit', edit_post_path(@post.id), class: "btn btn-info" %>
+        <%= link_to 'Delete', post_path(@post.id), class: "btn btn-info", method: :delete, data: { confirm: "Tem certeza que deseja excluir?" } %></span>
+      <% end %>
+    </div>
+    <% @comments.each_with_index do |comment, i| %>
+    <div class="panel-body border">
+      <a name="<%= comment.id %>"></a>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <p>
+        <a href="#<%= comment.id %>">#<%= i %></a>
+        writed <b><a href="<%= user_path(comment.user.id) %>"><%= comment.user.name %></a></b> at <%= comment.created_at %>
+        <% if permission? or comment.user == current_user and !current_user.block %>
+        <span style="float:right">
+        <% if !current_user.is_moderator? %><%= link_to 'Edit', edit_post_comment_path(@post.id, comment.id), class: "btn btn-info" %><% end %>
+        <%= link_to 'Delete', post_comment_path(@post.id, comment.id), class: "btn btn-info", method: :delete, data: { confirm: "Tem certeza que deseja excluir?" } %></span>
+        <% end %>
+      </p>
+      <%= simple_format comment.content %>
+      <div>&nbsp;</div>
+    </div>
+    <% end %>
+    <div class="panel-body">
+      <%= paginate @comments %>
+    </div>
+    <% if current_user and !current_user.block %>
+    <div class="panel-body">
+      <a class="btn btn-info" href="<%= new_post_comment_path(@post.id) %>">New replie</a>
+    </div>
+    <% end %>
+  </div>
+</div>

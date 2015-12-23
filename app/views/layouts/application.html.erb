@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forum</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag    'bootstrap.min', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'bootstrap.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="<%= root_url %>" class="navbar-brand">Forum</a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <% if user_signed_in? %>
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <p class="signed">
+              Hello <img src="<%= current_user.image %>" width="30" class="image"> <a href="<%= user_path(current_user.id) %>"><%= current_user.name %></a>, <%= link_to 'logout', destroy_user_session_path(), method: :get %>
+            </p>
+          </div>
+        </form>
+      <% else %>
+        <!-- <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password">
+          </div>
+          <button class="btn btn-success" type="submit">Sign in</button>
+        </form> -->
+
+        <form class="navbar-form navbar-right">
+          <a class="btn btn-success" href="<%= new_user_session_path %>">Sign in</a>
+          <a class="btn btn-warning" href="<%= new_user_path %>">New account</a>
+        </form>
+      <% end %>
+    </div><!--/.navbar-collapse -->
+  </div>
+</nav>
+
+<% if !user_signed_in? %>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container" style="padding-top:90px;">
+    <h1>Connect to your favorite social network</h1>
+    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+    <p><%= link_to 'Sign in with Facebook', signin_path %></p>
+  </div>
+</div>
+<% end %>
+
+<div class="container" style="padding-top:70px;">
+
+  <!-- Example row of columns -->
+  <% if current_user and current_user.block %>
+  <div class="alert alert-danger">You are banned.</div>
+  <% end %>
+  <%= yield %>
+
+  <hr>
+
+  <footer>
+    <p>&copy; 2015 Forum, Inc.</p>
+  </footer>
+</div> <!-- /container -->
+
+</body>
+</html>

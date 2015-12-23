@@ -1,0 +1,41 @@
+<% if @user.errors.any? %>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissable">
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    </div>
+</div>
+<% end %>
+
+<%= form_for @user do |f| %>
+<div class="row">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      New account
+    </div>
+      <div class="panel-body">
+        <p>
+          Name: <%= f.text_field :name %>
+        </p>
+        <p>
+          Email: <%= f.text_field :email %>
+        </p>
+        <p>
+          Password: <%= f.password_field :password %>
+        </p>
+        <p>
+          Password Confirmation: <%= f.password_field :password_confirmation %>
+        </p>
+        <div class="actions">
+          <input type="submit" class="btn btn-success" value="Salvar">
+        </div>
+      </div>
+
+  </div>
+</div>
+<% end %>

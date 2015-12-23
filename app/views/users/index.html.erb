@@ -1,0 +1,26 @@
+
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="<%= root_url %>">Home</a></li>
+    <li><a href="<%= users_path %>" class="active">Users</a></li>
+  </ol>
+</div>
+
+<div class="row">
+  <div class="panel panel-default">
+    <div class="row">
+      <% @users.each do |u| %>
+      <div class="col-lg-3">
+        <div class="panel-body">
+          <p align="center">
+            <a href="<%= user_path(u.id) %>"><img src="<%= u.image %>" class="image"></a>
+          </p>
+          <p align="center">
+            <a href="<%= user_path(u.id) %>"><%= u.name %></a>
+          </p>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="<%= root_url %>">Home</a></li>
+    <li><a href="<%= users_path %>">Users</a></li>
+    <li><a href="<%= user_path(@user.id) %>" class="active"><%= @user.name %></a></li>
+  </ol>
+</div>
+
+<div class="row">
+  <div class="panel panel-default">
+    <div class="row">
+      <div class="panel-body">
+        <div class="col-lg-4">
+          <div align="center">
+            <img src="<%= @user.image %>" class="image">
+          </div>
+          <div align="center" style="padding-top:20px;">
+            <b>Name:</b> <%= @user.name %><BR>
+            <b>Email:</b> <%= @user.email %><BR>
+            <b>Created:</b> <%= @user.created_at %><BR>
+            <% if permission? %>
+              <% if @user.block %>
+                <a href="<%= ban_user_path(@user.id) %>" class="btn btn-success">UNBLOCK</a>
+              <% else %>
+                <a href="<%= ban_user_path(@user.id) %>" class="btn btn-danger">BLOCK</a>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="panel-body">
+            <p>
+              <b>My Last Topics</b>
+            </p>
+            <% if @posts.count == 0 %>
+            <p>
+              No topic.
+            </p>
+            <% end %>
+            <% @posts.each do |p| %>
+              <p>
+                <a href="<%= post_path(p.id) %>"><%= p.name %></a> - <%= p.updated_at %>
+              </p>
+            <% end %>
+            <!-- <%= paginate @posts %> -->
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="panel-body">
+            <p>
+              <b>My Last Posts</b>
+            </p>
+            <% if @post_comments.count == 0 %>
+            <p>
+              No post.
+            </p>
+            <% end %>
+            <% @post_comments.each do |p| %>
+            <% if p.post %>
+              <p>
+                <a href="<%= post_path(p.post_id) %>#<%= p.id %>"><%= p.post.name %></a> - <%= p.post.updated_at %>
+              </p>
+            <% end %>
+            <% end %>
+            <!-- <%= paginate @post_comments %> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

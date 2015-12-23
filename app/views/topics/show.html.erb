@@ -1,0 +1,103 @@
+
+<div class="row">
+  <ol class="breadcrumb">
+    <li><a href="<%= root_url %>">Home</a></li>
+    <li><a href="<%= category_path(@topic.category.id) %>"><%= @topic.category.name %></a></li>
+    <% if @topic.get_topic == nil %>
+      <li><a href="<%= topic_path(@topic.id) %>" class="active"><%= @topic.name %></a></li>
+    <% else %>
+      <li><a href="<%= topic_path(@topic.get_topic.id) %>"><%= @topic.get_topic.name %></a></li>
+      <li><a href="<%= topic_path(@topic.id) %>" class="active"><%= @topic.name %></a></li>
+    <% end %>
+  </ol>
+</div>
+
+<% if current_user and !current_user.block %>
+<div class="row pd10">
+  <a href="<%= new_topic_post_path(@topic.id) %>" class="btn btn-info">New Topic</a>
+</div>
+<% end %>
+
+<% if @topic.topics.count > 0 %>
+<div class="row">
+  <div class="panel panel-info">
+    <div class="panel-heading col-md-12">
+      <table width="100%">
+        <tr>
+          <td class="col-md-6">Forum</td>
+          <td class="col-md-2">Tópicos/Posts</td>
+          <td class="col-md-4">Últimos posts</td>
+        </tr>
+      </table>
+    </div>
+    <% @topic.topics.each do |topic| %>
+    <% if topic %>
+    <table class="table" width="100%">
+      <tr>
+        <td class="col-md-6">
+          <p><a href="<%= topic_path(topic.id) %>"><%= topic.name %></a> <small>(<%= topic.get_views %> Viewing)</small></p>
+          <p><small><%= topic.description %></small></p>
+        </td>
+        <td class="col-md-2">
+          <p>
+            Threads: <%= topic.posts.count %>
+          </p>
+          <p>
+            Posts: <%= topic.get_comments.count %>
+          </p>
+        </td>
+        <td class="col-md-4">
+          <% if topic.last_post %>
+          <p>
+            <a href="<%= topic_path(topic.id) %>"><%= topic.last_post.name %></a> Go to last post by <a href="<%= user_path(topic.last_post.user.id) %>"><%= topic.last_post.user.name %></a>
+          </p>
+          <p>
+            <%= topic.last_post.updated_at %>
+          </p>
+          <% else %>
+          <p>
+            -
+          </p>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+    <% end %>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+<div class="row">&nbsp;</div>
+
+<div class="row">
+  <div class="panel panel-info">
+    <div class="panel-heading col-md-12">
+      <table width="100%">
+        <tr>
+          <td class="col-md-6">Posts</td>
+          <td class="col-md-2">Tópicos/Posts</td>
+          <td class="col-md-4">Últimos posts</td>
+        </tr>
+      </table>
+    </div>
+    <% @posts.each do |p| %>
+    <table class="table <% if p.featured %>navbar-default<% end %>" width="100%">
+      <tr>
+        <td class="col-md-6">
+          <a href="<%= post_path(p.id) %>"><%= p.name %></a>
+        </td>
+        <td class="col-md-2">
+            <p>Replies: <%= p.get_replies_count %></p>
+            <p>Views: <%= p.views %></p>
+        </td>
+        <td class="col-md-4">
+            <p><%= p.user.name %></p>
+            <p><%= p.updated_at %></p>
+        </td>
+      </tr>
+    </table>
+    <% end %>
+    <%= paginate @posts %>
+  </div>
+</div>
