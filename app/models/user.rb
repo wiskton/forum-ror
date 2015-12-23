@@ -1,16 +1,7 @@
 class User < ActiveRecord::Base
-  # include CanCan::User
-  #
-  # def initialize(user)
-  #   can :manage, Post
-  #   can :read, User
-  #   can :manage, User, :id => user.id
-  #   can :read, ActiveAdmin::Page, :name => "Dashboard"
-  # end
 
   validate :name_required
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 

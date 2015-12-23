@@ -7,7 +7,9 @@ ActiveAdmin.setup do |config|
   config.site_title = "Forum"
 
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
-  config.cancan_ability_class = "User"
+  config.on_unauthorized_access = :access_denied
+  config.cancan_ability_class = "Ability"
+
   config.authentication_method = :authenticate_active_admin_user!
   config.current_user_method   = :current_user
   config.logout_link_path      = :destroy_user_session_path
