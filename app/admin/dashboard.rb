@@ -1,7 +1,5 @@
 ActiveAdmin.register_page "Dashboard" do
 
-  posts = Post.all.count
-
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
@@ -33,14 +31,14 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Posts" do
           span class: "dashboard-total" do
-            Comment.all.count - posts
+            Comment.all.count - Post.all.count
           end
         end
       end
       column do
         panel "Topics" do
           span class: "dashboard-total" do
-            posts
+            Post.all.count
           end
         end
       end

@@ -12,7 +12,7 @@ default: &default
   # database: ddaierhd9mpuop
   # username: nojlfmfcnpmkrk
   # password: Hp3HmCbGO_j5qREBafItHZvK_M
-  url: postgres://nojlfmfcnpmkrk:Hp3HmCbGO_j5qREBafItHZvK_M@ec2-54-227-254-13.compute-1.amazonaws.com:5432/ddaierhd9mpuop
+  url: postgres://qxsmoaorrdujeq:7Ygn9qRbSmTtsJN-bZyfwKvQ9O@ec2-54-83-204-159.compute-1.amazonaws.com:5432/dv1oqrlst9gn7
 
 development:
   <<: *default
