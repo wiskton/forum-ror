@@ -8,9 +8,18 @@ default: &default
   adapter: postgresql
   pool: 5
   encoding: unicode
+# teste
+# default: &default
+#   adapter: sqlite3
+#   database: db/development.sqlite3
+#   pool: 5
+#   encoding: unicode
 
 development:
-  <<: *default
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  # <<: *default
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -19,4 +28,6 @@ test:
   <<: *default
 
 production:
-  <<: *default
+  adapter: postgresql
+  pool: 5
+  encoding: unicode
