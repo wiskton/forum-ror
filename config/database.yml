@@ -16,8 +16,11 @@ default: &default
 #   encoding: unicode
 
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  database: forum
+  host: 127.0.0.1
+  username: postgres
+  password: 123456
   pool: 5
   # <<: *default
 
